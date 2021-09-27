@@ -582,25 +582,10 @@ const getRedUsers = () => {
  * @param {String} item The criterion to search against
  * @param {*} equalTo The value for the corresponding criterion to be searched for
  */
-const getEmployeeByItem = (item, equalTo) => {
-  let matchedEmployees = [];
-  employeeArr.forEach( (employee) => {
-    let lookingAt;
-    switch (item) {
-      case "id": lookingAt = employee.id; break;
-      case "firstName": lookingAt = employee.firstName; break;
-      case "lastName": lookingAt = employee.lastName; break;
-      case "salary": lookingAt = employee.salary; break;
-      case "position": lookingAt = employee.position; break;
-      case "yearsWorked": lookingAt = employee.yearsWorked; break;
-    }
-    try {
-      (lookingAt === equalTo ? matchedEmployees.push(employee) : false);
-    } catch (error) {
-      console.log("There appears to have been a problem.\nPlease make sure you have put in a valid search item");
-    }
+const getEmployeesByItem = (item, equalTo) => {
+  return employeeArr.filter( (employee) => {
+      return employee[item] === equalTo;
   });
-  return matchedEmployees;
 }
 
 const sortEmployees = (criterion, omitBanned) => {
@@ -632,7 +617,7 @@ const main = () => {
     employee.displayEmployee();
   });
   console.log("\nSearching for all users named ALEX\n========");
-  getEmployeeByItem("firstName", "Alex").forEach( (employee) => {
+  getEmployeesByItem("firstName", "Alex").forEach( (employee) => {
     employee.displayEmployee();
   });
   const criterion = "lastName";  //  <== CHANGE ARGS FOR DIFFERENT SORTS!
